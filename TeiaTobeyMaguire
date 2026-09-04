@@ -1,0 +1,82 @@
+import java.util.Random;
+
+// Classe principal para testar o algoritmo
+public class TeiaTobeyMaguire {
+    public static void main(String[] args) {
+        // Criando o nosso Peter Parker com 100% de energia
+        HomemAranha peterParker = new HomemAranha(100);
+
+        System.out.println("=== SIMULADOR DE TEIA ORGÂNICA (TOBEY MAGUIRE) ===");
+        
+        // Tentativa 1: Disparar teia para se balançar em um prédio alto
+        peterParker.dispararTeia("Edifício Daily Bugle", 45.0);
+
+        System.out.println("\n--- Passando por uma crise emocional (Perda de poderes) ---");
+        peterParker.setEnergiaBio(20); // Energia baixa/crise de confiança
+        
+        // Tentativa 2: A teia pode falhar como no filme Homem-Aranha 2
+        peterParker.dispararTeia("Prédio do Oscar Corp", 30.0);
+    }
+}
+
+// Classe que representa as propriedades da teia orgânica
+class TeiaOrganica {
+    private double resistenciaTensao; // Em Newtons
+    private double comprimento;
+    private String alvoFixado;
+    private boolean fixada;
+
+    public TeiaOrganica(double energiaDoadora) {
+        // A resistência da teia depende diretamente da saúde/energia biológica do Peter
+        this.resistenciaTensao = energiaDoadora * 500; 
+        this.fixada = false;
+    }
+
+    public boolean fixarNoAlvo(String alvo, double distancia) {
+        if (resistenciaTensao < 15000) { // Limiar mínimo para a teia ser funcional
+            System.out.println("❌ A teia saiu fraca, dissolveu no ar e não alcançou o " + alvo + "!");
+            return false;
+        }
+        this.comprimento = distancia;
+        this.alvoFixado = alvo;
+        this.fixada = true;
+        System.out.println("🕸️ Teia disparada com sucesso! Fixada em: " + alvo);
+        return true;
+    }
+
+    public void simularBalanco() {
+        if (!fixada) return;
+        
+        System.out.println("🔄 Balançando... Força G suportada pela teia: " + (resistenciaTensao / 10) + " kg de tração.");
+        System.out.println("🎵 *Trilha sonora épica do Danny Elfman tocando ao fundo*");
+    }
+}
+
+// Classe do Herói
+class HomemAranha {
+    private int energiaBio; // Representa o estado físico e emocional (0 a 100)
+
+    public HomemAranha(int energiaBio) {
+        this.energiaBio = energiaBio;
+    }
+
+    public void setEnergiaBio(int energiaBio) {
+        this.energiaBio = energiaBio;
+    }
+
+    public void dispararTeia(String predioAlvo, double distanciaMetros) {
+        System.out.println("\n[Ação] Peter faz a pose clássica com a mão 🤟");
+        
+        // Gera a teia baseada na energia biológica atual
+        TeiaOrganica novaTeia = new TeiaOrganica(this.energiaBio);
+        
+        // Tenta fixar a teia no alvo
+        boolean sucesso = novaTeia.fixarNoAlvo(predioAlvo, distanciaMetros);
+        
+        if (sucesso) {
+            novaTeia.simularBalanco();
+        } else {
+            System.out.println("💥 Peter Parker: 'Por que isso sempre acontece comigo?' *Cai em cima de latas de lixo*");
+        }
+    }
+}
